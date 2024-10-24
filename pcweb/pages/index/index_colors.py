@@ -24,7 +24,7 @@ def index_colors() -> rx.Component:
 .dark,
 .dark-theme {
   /* Slate */
-  --c-slate-1: #151618;
+  --c-slate-1: #000000;
   --c-slate-2: #1A1B1D;
   --c-slate-3: #222326;
   --c-slate-4: #27282B;
@@ -39,3 +39,4 @@ def index_colors() -> rx.Component:
 }
         """,
     )
+#  --c-slate-1: #151618;
