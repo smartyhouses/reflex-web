@@ -21,17 +21,17 @@ from .search import search_bar
 
 from pcweb.pages.docs import getting_started, hosting
 from pcweb.pages.faq import faq
-from pcweb.pages.pricing import pricing
+from pcweb.pages.pricing.pricing import pricing
 from pcweb.pages.errors import errors
 from pcweb.pages.docs.library import library
 from pcweb.pages.blog import blogs
 from pcweb.pages.changelog import changelog
 from pcweb.pages.gallery import gallery
-
+from pcweb.components.hosting_banner import hosting_banner
 from pcweb.pages.blog.paths import blog_data
 
 from pcweb.components.docpage.navbar.navmenu.navmenu import nav_menu
-from pcweb.constants import CONTRIBUTING_URL, FORUM_URL, ROADMAP_URL
+from pcweb.constants import CONTRIBUTING_URL, FORUM_URL, ROADMAP_URL, REFLEX_CLOUD_URL
 
 
 def resource_item(text: str, url: str, icon: str):
@@ -66,7 +66,7 @@ def link_item(name: str, url: str, active_str: str = ""):
     active = router_path.contains(active_str)
     if active_str == "docs":
         active = rx.cond(
-            router_path.contains("hosting") | router_path.contains("library"),
+            router_path.contains("library"),
             False,
             active,
         )
@@ -288,7 +288,7 @@ def new_component_section() -> rx.Component:
                 link_item("Docs", getting_started.introduction.path, "docs"),
             ),
             nav_menu.item(
-                link_item("Templates", gallery.path, "gallery"),
+                link_item("Templates", gallery.path, "templates"),
             ),
             nav_menu.item(
                 new_menu_trigger("Blog", blogs.path, "blog"),
@@ -324,7 +324,10 @@ def new_component_section() -> rx.Component:
                 ),
             ),
             nav_menu.item(
-                link_item("Pricing", pricing.path, "pricing"),
+                link_item("Hosting", "/hosting", "hosting"),
+            ),
+            nav_menu.item(
+                link_item("Pricing", "/pricing", "pricing"),
             ),
             class_name="desktop-only flex flex-row items-center gap-0 lg:gap-7 m-0 h-full list-none",
         ),
@@ -350,7 +353,8 @@ def new_component_section() -> rx.Component:
                         class_name="!h-8 !font-small-smbold !rounded-[0.625rem] whitespace-nowrap",
                     ),
                     underline="none",
-                    href=hosting.deploy_quick_start.path,
+                    is_external=True,
+                    href=REFLEX_CLOUD_URL,
                 ),
                 class_name="desktop-only",
             ),
@@ -368,7 +372,11 @@ def new_component_section() -> rx.Component:
 
 
 def navbar() -> rx.Component:
-    return rx.el.header(
-        new_component_section(),
-        class_name="top-0 z-[9999] fixed flex flex-row items-center gap-12 bg-slate-1 shadow-[inset_0_-1px_0_0_var(--c-slate-3)] px-4 lg:px-6 w-screen h-[48px] lg:h-[65px]",
+    return rx.box(
+        hosting_banner(),
+        rx.el.header(
+            new_component_section(),
+            class_name="flex flex-row items-center gap-12 bg-slate-1 shadow-[inset_0_-1px_0_0_var(--c-slate-3)] px-4 lg:px-6 w-screen h-[48px] lg:h-[65px]",
+        ),
+        class_name="flex flex-col w-full top-0 z-[9999] fixed",
     )

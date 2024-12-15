@@ -3,7 +3,7 @@ from pcweb import constants
 from pcweb.templates.webpage import webpage
 from pcweb.components.icons.icons import get_icon
 from pcweb.components.webpage.comps import h1_title
-
+from pcweb.flexdown import markdown_with_shiki
 
 def change(
     date: str, version: str, description: str, points: list[str], link: str
@@ -33,7 +33,7 @@ def change(
         rx.el.ul(
             *[
                 rx.el.li(
-                    rx.markdown(d, class_name="markdown-code"),
+                    markdown_with_shiki(d, class_name="markdown-code"),
                     class_name="font-small text-slate-11",
                 )
                 for d in points
@@ -47,6 +47,43 @@ def change(
 
 def changelog_content():
     return rx.el.ul(
+        change(
+            "2024-11-25",
+            "v0.6.6",
+            "Support Pydantic BaseModel (v1 & v2) objects in state",
+            [
+                "`reflex init` now links to templates on the web",
+                "New `.temporal` event action drops event when backend is down",
+                "Improved type checking",
+                "`rx.asset` promoted from experimental",
+            ],
+            "https://github.com/reflex-dev/reflex/releases/tag/v0.6.6",
+        ),
+        change(
+            "2024-11-12",
+            "v0.6.5",
+            "New Hosting Service CLI",
+            [
+                "Additional static and runtime typing improvements",
+                "`rx.get_state` API for accessing state outside of event handlers",
+                "Support custom `bunfig.toml`",
+                "Direct encoding of State vars to JSON (without `get_value`)",
+            ],
+            "https://github.com/reflex-dev/reflex/releases/tag/v0.6.5",
+        ),
+        change(
+            "2024-10-29",
+            "v0.6.4",
+            "Make Var System Expandable",
+            [
+                "Set default gunicorn max_requests to avoid memory leak",
+                "Support for dotenv `env_file` when `python-dotenv` is installed",
+                "New `rx.dynamic` decorator for component functions using state",
+                "More event typing improvements",
+                "Experimental support for Shiki code block",
+            ],
+            "https://github.com/reflex-dev/reflex/releases/tag/v0.6.4",
+        ),
         change(
             "2024-10-18",
             "v0.6.3",
