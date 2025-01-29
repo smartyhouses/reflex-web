@@ -1,5 +1,6 @@
 ```python exec
 import reflex as rx
+import reflex_chakra as rc
 from pcweb.flexdown import markdown_with_shiki
 ```
 
@@ -40,9 +41,9 @@ def markdown_error(text: str):
 ```python exec
 def error_message(heading: str, error_code: str, solution: rx.Component, error_type: str = "") -> rx.Component:
     return rx.el.li(
-        rx.chakra.accordion(
-            rx.chakra.accordion_item(
-                rx.chakra.accordion_button(
+        rc.accordion(
+            rc.accordion_item(
+                rc.accordion_button(
                     rx.box(
                         rx.box(
                             h_comp_error(text=heading),
@@ -52,11 +53,11 @@ def error_message(heading: str, error_code: str, solution: rx.Component, error_t
                         rx.text(error_code, class_name="font-code text-violet-9 text-pretty font-medium"),
                     class_name="flex flex-col gap-2.5 text-start",
                     ),
-                    rx.chakra.spacer(),
-                    rx.chakra.accordion_icon(color="var(--c-slate-9)"),
+                    rc.spacer(),
+                    rc.accordion_icon(color="var(--c-slate-9)"),
                     class_name="!bg-transparent !hover:bg-transparent !p-4 lg:!p-6 gap-4 lg:gap-32",
                 ),
-                rx.chakra.accordion_panel(
+                rc.accordion_panel(
                     *solution,
                     class_name="!p-[0rem_1rem_1rem_1rem] lg:!p-[0rem_1.5rem_1.5rem_1.5rem] font-small text-slate-11 text-start flex flex-col gap-3 [&>code]:!font-code",
                 ),
@@ -159,7 +160,7 @@ error_message(
     error_code="TypeError: Invalid var passed for prop href, expected type <class 'str'>, got value {state.my_list.at(i)} of type typing.Any.",
     solution=[
                 h4_comp_error(text="Add a type annotation for list Vars"),
-                rx.text("For certain props, reflex validates type correctness of the variable. Expecially when de-referencing lists and dicts, it is important to supply the correct annotation."),
+                rx.text("For certain props, reflex validates type correctness of the variable. Especially when de-referencing lists and dicts, it is important to supply the correct annotation."),
                 code_block_error(code=
 """class State(rx.State):
     # NO
@@ -192,3 +193,16 @@ error_message(
     error_type="Python Error",
 )
 ```
+
+
+```python eval
+error_message(
+    heading="ImportError: couldn't import psycopg",
+    error_code="ImportError: couldn't import psycopg 'python' implementation: libpq library not found | couldn't import psycopg 'binary' implementation: No module named 'psycopg_binary' | couldn't import psycopg 'c' implementation: No module named 'psycopg_c'",
+    solution=[
+        h4_comp_error(text="This is caused by not installing the correct psycopg package. Solution is to add the `psycopg[binary]==3.2.3` package to your requirements.txt file."),
+    ],
+    error_type="Import Error",
+)
+```
+

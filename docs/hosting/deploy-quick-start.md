@@ -56,7 +56,7 @@ In your project directory (where you would normally run `reflex run`) paste this
 The command is by default interactive. It asks you a few questions for information required for the deployment.
 
 
-1. The first question will compare your `requirements.txt` to your python environment and if they are different then it will ask you if you want to update your `requirements.txt` or to continue with the current one. If they are identical this queston will not appear. To create a `requirements.txt` file, run `pip freeze > requirements.txt`.
+1. The first question will compare your `requirements.txt` to your python environment and if they are different then it will ask you if you want to update your `requirements.txt` or to continue with the current one. If they are identical this question will not appear. To create a `requirements.txt` file, run `pip freeze > requirements.txt`.
 2. The second question will search for a deployed app with the name of your current app, if it does not find one then it will ask if you wish to proceed in deploying your new app.
 3. The third question is optional and will ask you for an app description.
 
@@ -70,5 +70,17 @@ That’s it! You should receive some feedback on the progress of your deployment
 If you go back to the Cloud UI you should be able to see your deployed app and other useful app information.
 
 
+```md alert info
+# Setup a Cloud Config File
+To create a `config.yml` file for your app to set your app configuration check out the [Cloud Config Docs]({docs.hosting.app.path}#config-file).
+```
 
+```md alert info
+# Moving around the Cloud UI
+To go back, i.e. from an app to a project or from a project to your list of projects you just click the `REFLEX logo` in the top left corner of the page.
+```
 
+```md alert info
+# All flag values are saved between runs
+All your flag values, i.e. environment variables or regions or tokens, are saved between runs. This means that if you run a command and you pass a flag value, the next time you run the same command the flag value will be the same as the last time you ran it. This means you should only set the flag values again if you want to change them.
+```
